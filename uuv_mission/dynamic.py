@@ -77,6 +77,7 @@ class Mission:
     @classmethod
     def from_csv(cls, file_name: str):
         # You are required to implement this method
+        
         # Import the mission data CSV file
         with open('mission.csv', 'r') as file:
             read = csv.reader(file)
