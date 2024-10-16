@@ -2,13 +2,9 @@ import csv
 import os
 
 
-# Find directory of the current folder
-path = os.path.realpath(__file__)
-dir = os.path.dirname(path)
-
-# Change directory to target folder
-file_dir = dir.replace('uuv_mission', 'data')
-os.chdir(file_dir)
+# Change directory to the folder with the data in
+file_path = "\data"
+os.chdir(os.getcwd() + file_path)
 
 # Store the CSV file in a list
 with open('mission.csv', 'r') as file:

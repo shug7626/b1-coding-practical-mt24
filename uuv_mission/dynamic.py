@@ -80,19 +80,16 @@ class Mission:
     def from_csv(cls, file_name: str):
         # You are required to implement this method
 
-        # Find directory of the current folder
-        path = os.path.realpath(__file__)
-        dir = os.path.dirname(path)
-
-        # Change directory to target folder
-        file_dir = dir.replace('uuv_mission', 'data')
-        os.chdir(file_dir)
+        # Change directory to the folder with the data in
+        os.chdir(os.getcwd() + file_name)
 
         # Store the CSV file in a list
         with open('mission.csv', 'r') as file:
             read = csv.reader(file)
             data = list(read)
         
+        return data
+
         pass
 
 
