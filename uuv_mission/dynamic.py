@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from .terrain import generate_reference_and_limits
 import csv
 import os
+from .control import PDController
+import pandas as pd
 
 
 class Submarine:
@@ -67,9 +69,10 @@ class Trajectory:
 
 @dataclass
 class Mission:
-    reference: np.ndarray
-    cave_height: np.ndarray
-    cave_depth: np.ndarray
+    def __init__(cls):
+        cls.reference: np.ndarray
+        cls.cave_height: np.ndarray
+        cls.cave_depth: np.ndarray
 
     @classmethod
     def random_mission(cls, duration: int, scale: float):
@@ -78,25 +81,27 @@ class Mission:
 
     @classmethod
     def from_csv(cls, file_name: str):
-        # You are required to implement this method
-
         # Change directory to the folder with the data in
+        os.chdir('..')
         os.chdir(os.getcwd() + file_name)
 
-        # Store the CSV file in a list
-        with open('mission.csv', 'r') as file:
-            read = csv.reader(file)
-            data = list(read)
+        # Store the CSV file using pandas
+        df = pd.read_csv('mission.csv')
+        data = df.values
         
-        return data
-
-        pass
+        # Seperate the csv data into lists
+        cls.reference = np.array(data[:, 0])
+        cls.cave_height = np.array(data[:, 1])
+        cls.cave_depth = np.array(data[:, 2])
+    
+        return cls
 
 
 class ClosedLoop:
     def __init__(self, plant: Submarine, controller):
         self.plant = plant
         self.controller = controller
+        self.PDController = PDController(controller)
 
     def simulate(self,  mission: Mission, disturbances: np.ndarray) -> Trajectory:
 

@@ -4,8 +4,8 @@ class PDController:
         self.Kd = controller[1]
         self.prev_error = error
     
-    def calculate_control(self, error):
-        
+    def calculate_control(self, reference, output):
+        error = reference - output
         derivative = (error - self.prev_error)
         control_out = (self.Kp * error) + (self.Kd * derivative)
 
