@@ -4,6 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from .terrain import generate_reference_and_limits
 import csv
+import os
+
 
 class Submarine:
     def __init__(self):
@@ -77,14 +79,20 @@ class Mission:
     @classmethod
     def from_csv(cls, file_name: str):
         # You are required to implement this method
-        
-        # Import the mission data CSV file
+
+        # Find directory of the current folder
+        path = os.path.realpath(__file__)
+        dir = os.path.dirname(path)
+
+        # Change directory to target folder
+        file_dir = dir.replace('uuv_mission', 'data')
+        os.chdir(file_dir)
+
+        # Store the CSV file in a list
         with open('mission.csv', 'r') as file:
             read = csv.reader(file)
-            data = list(reader)
+            data = list(read)
         
-        # Print the data to check
-        print(data)
         pass
 
 
