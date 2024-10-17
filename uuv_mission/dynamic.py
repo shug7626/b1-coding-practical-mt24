@@ -3,7 +3,6 @@ from dataclasses import dataclass
 import numpy as np
 import matplotlib.pyplot as plt
 from .terrain import generate_reference_and_limits
-import csv
 import os
 from .control import PDController
 import pandas as pd
